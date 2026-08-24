@@ -1,5 +1,5 @@
 #!/bin/bash
-BIN=/workspace/proxy-bin
+BIN="$(cd "$(dirname "$0")" && pwd)"
 HOST_FILE="$BIN/cf-hostname"
 LOG="$BIN/supervise.log"
 INTERVAL=20
@@ -28,12 +28,12 @@ stamp "supervise start"
 while true; do
   if ! alive "$BIN/slots.pid"; then
     stamp "slots down, start"
-    PYTHONPATH="$BIN" python3 "$BIN/kui/slots.py" >>"$BIN/slots.log" 2>&1 &
+    PYTHONPATH="$BIN" PROXY_BIN="$BIN" python3 "$BIN/kui/slots.py" >>"$BIN/slots.log" 2>&1 &
     echo $! >"$BIN/slots.pid"
   fi
   if ! alive "$BIN/ovpn-slots.pid"; then
     stamp "ovpn slots down, start"
-    PYTHONPATH="$BIN" python3 "$BIN/kui/ovpn_slots.py" >>"$BIN/ovpn-slots.log" 2>&1 &
+    PYTHONPATH="$BIN" PROXY_BIN="$BIN" python3 "$BIN/kui/ovpn_slots.py" >>"$BIN/ovpn-slots.log" 2>&1 &
     echo $! >"$BIN/ovpn-slots.pid"
   fi
   need=0

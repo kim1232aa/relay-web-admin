@@ -33,14 +33,17 @@ Clash / v2rayN
 
 ```bash
 npm install
-# 把 xray / cloudflared / openvpn / tor / slirp4netns 放到 proxy-bin/ 与 proxy-bin/native/
-echo 'eyJ...' > proxy-bin/cf-tunnel-token   # Cloudflare Tunnel token
+echo 'eyJ...' > proxy-bin/cf-tunnel-token   # Cloudflare Tunnel token（仅此项需手动放）
 echo 'vless.example.com' > proxy-bin/cf-hostname
-bash proxy-bin/start.sh
+bash proxy-bin/start.sh      # 缺 xray / cloudflared / tor / openvpn 会自动下载
 bash proxy-bin/supervise.sh &
 npm run dev
 ```
 
-Cloudflare 隧道 Public Hostname 指到本机 `http://127.0.0.1:38079`。
+`proxy-bin/install.sh` 会拉：
 
-**不要把 `proxy-bin/cf-tunnel-token` 提交进 git。**
+- xray + geoip.dat / geosite.dat（GitHub XTLS）
+- cloudflared（GitHub Cloudflare）
+- tor / openvpn / slirp4netns（系统已装则直接用，否则解 Debian deb）
+
+**不要把 `proxy-bin/cf-tunnel-token` 提交进 git。** 二进制、Tor 缓存也不进仓库。

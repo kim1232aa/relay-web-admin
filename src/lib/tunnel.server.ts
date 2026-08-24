@@ -1,9 +1,11 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { spawn } from "node:child_process";
+import { join } from "node:path";
 import { counts, type LiveExit } from "./nodes";
 
-const HOST_FILE = "/workspace/proxy-bin/cf-hostname";
-const TOKEN_FILE = "/workspace/proxy-bin/cf-tunnel-token";
+const BIN = process.env.PROXY_BIN || join(process.cwd(), "proxy-bin");
+const HOST_FILE = join(BIN, "cf-hostname");
+const TOKEN_FILE = join(BIN, "cf-tunnel-token");
 
 function pidAlive(file: string): boolean {
   try {
@@ -56,7 +58,7 @@ export function writeTunnelAuth(token?: string, host?: string) {
 }
 
 export function restartStack() {
-  spawn("bash", ["/workspace/proxy-bin/start.sh"], {
+  spawn("bash", [join(BIN, "start.sh")], {
     detached: true,
     stdio: "ignore",
   }).unref();
@@ -64,7 +66,7 @@ export function restartStack() {
 
 export function liveExitSlots(): LiveExit[] {
   const rows: LiveExit[] = [];
-  for (const file of ["/workspace/proxy-bin/slots.json", "/workspace/proxy-bin/ovpn.json"]) {
+  for (const file of [join(BIN, "slots.json"), join(BIN, "ovpn.json")]) {
     try {
       if (!existsSync(file)) continue;
       const parsed = JSON.parse(readFileSync(file, "utf8")) as { slots?: LiveExit[] };
@@ -79,11 +81,11 @@ export function liveExitSlots(): LiveExit[] {
 export function stackStatus() {
   const host = tunnelHostname();
   const procs = {
-    xray: pidAlive("/workspace/proxy-bin/xray.pid"),
-    mux: pidAlive("/workspace/proxy-bin/mux.pid"),
-    cloudflared: pidAlive("/workspace/proxy-bin/cloudflared.pid"),
-    supervise: pidAlive("/workspace/proxy-bin/supervise.pid"),
-    slots: pidAlive("/workspace/proxy-bin/slots.pid"),
+    xray: pidAlive(join(BIN, "xray.pid")),
+    mux: pidAlive(join(BIN, "mux.pid")),
+    cloudflared: pidAlive(join(BIN, "cloudflared.pid")),
+    supervise: pidAlive(join(BIN, "supervise.pid")),
+    slots: pidAlive(join(BIN, "slots.pid")),
   };
   const live = procs.xray && procs.mux && procs.cloudflared;
   const slots = liveExitSlots();
@@ -97,8 +99,8 @@ export function stackStatus() {
     slots,
     counts: counts(host || "relay.local", slots),
     logs: [
-      ...tailFile("/workspace/proxy-bin/supervise.log", 12),
-      ...tailFile("/workspace/proxy-bin/cf.log", 8),
+      ...tailFile(join(BIN, "supervise.log"), 12),
+      ...tailFile(join(BIN, "cf.log"), 8),
     ].slice(-20),
   };
 }

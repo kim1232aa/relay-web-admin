@@ -1,10 +1,13 @@
 import fs from "node:fs";
 import http from "node:http";
 import net from "node:net";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
+const BIN = path.dirname(fileURLToPath(import.meta.url));
+const SOCK_DIR = path.join(BIN, "socks");
 const ADMIN = { host: "127.0.0.1", port: 8080 };
 const XRAY_PORT = 38080;
-const SOCK_DIR = "/workspace/proxy-bin/socks";
 const TAGS = ["jp", "kr", "sg", "au", "us", "ca", "de", "nl", "fr", "gb", "se", "ch", "ovpn-jp", "ovpn-kr", "ovpn-ro"];
 
 function pathname(url = "/") {

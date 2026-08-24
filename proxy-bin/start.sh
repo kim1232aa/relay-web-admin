@@ -1,8 +1,22 @@
 #!/bin/bash
 set -e
-BIN=/workspace/proxy-bin
+BIN="$(cd "$(dirname "$0")" && pwd)"
 cd "$BIN"
+bash "$BIN/install.sh"
 mkdir -p "$BIN/socks" "$BIN/tor" "$BIN/ovpn"
+
+python3 - "$BIN" <<'PY'
+import json, sys
+from pathlib import Path
+bin = Path(sys.argv[1])
+p = bin / "xray.json"
+cfg = json.loads(p.read_text())
+for ib in cfg.get("inbounds", []):
+    listen = ib.get("listen")
+    if isinstance(listen, str) and listen.endswith(".sock"):
+        ib["listen"] = str(bin / "socks" / Path(listen).name)
+p.write_text(json.dumps(cfg, indent=2) + "\n")
+PY
 
 stop_pid() {
   local f="$1"
@@ -16,8 +30,8 @@ stop_pid "$BIN/xray.pid"
 stop_pid "$BIN/mux.pid"
 stop_pid "$BIN/cloudflared.pid"
 python3 -c '
-import os
-needle = "node /workspace/proxy-bin/mux.mjs"
+import os, sys
+needle = "node " + sys.argv[1] + "/mux.mjs"
 for pid in os.listdir("/proc"):
     if not pid.isdigit():
         continue
@@ -30,7 +44,7 @@ for pid in os.listdir("/proc"):
             os.kill(int(pid), 15)
         except OSError:
             pass
-'
+' "$BIN"
 rm -f "$BIN/socks/"in-*.sock "$BIN/socks/"*.sock.lock
 sleep 0.3
 
@@ -51,14 +65,14 @@ echo $! >"$BIN/cloudflared.pid"
 if [ -f "$BIN/slots.pid" ] && kill -0 "$(cat "$BIN/slots.pid")" 2>/dev/null; then
   :
 else
-  PYTHONPATH="$BIN" python3 "$BIN/kui/slots.py" >>"$BIN/slots.log" 2>&1 &
+  PROXY_BIN="$BIN" PYTHONPATH="$BIN" python3 "$BIN/kui/slots.py" >>"$BIN/slots.log" 2>&1 &
   echo $! >"$BIN/slots.pid"
 fi
 
 if [ -f "$BIN/ovpn-slots.pid" ] && kill -0 "$(cat "$BIN/ovpn-slots.pid")" 2>/dev/null; then
   :
 else
-  PYTHONPATH="$BIN" python3 "$BIN/kui/ovpn_slots.py" >>"$BIN/ovpn-slots.log" 2>&1 &
+  PROXY_BIN="$BIN" PYTHONPATH="$BIN" python3 "$BIN/kui/ovpn_slots.py" >>"$BIN/ovpn-slots.log" 2>&1 &
   echo $! >"$BIN/ovpn-slots.pid"
 fi
 

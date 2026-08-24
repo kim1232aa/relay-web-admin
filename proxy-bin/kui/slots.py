@@ -8,7 +8,7 @@ import subprocess
 import time
 from pathlib import Path
 
-BIN = Path("/workspace/proxy-bin")
+BIN = Path(os.environ.get("PROXY_BIN") or Path(__file__).resolve().parents[1])
 NAT = BIN / "native"
 TOR_ROOT = BIN / "tor"
 STATUS = BIN / "slots.json"
