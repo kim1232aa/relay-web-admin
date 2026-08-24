@@ -1,0 +1,608 @@
+{
+  "log": {
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "front",
+      "listen": "127.0.0.1",
+      "port": 38080,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-jp",
+      "listen": "/workspace/proxy-bin/socks/in-jp.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-us",
+      "listen": "/workspace/proxy-bin/socks/in-us.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-de",
+      "listen": "/workspace/proxy-bin/socks/in-de.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-nl",
+      "listen": "/workspace/proxy-bin/socks/in-nl.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-kr",
+      "listen": "/workspace/proxy-bin/socks/in-kr.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-sg",
+      "listen": "/workspace/proxy-bin/socks/in-sg.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-au",
+      "listen": "/workspace/proxy-bin/socks/in-au.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-ca",
+      "listen": "/workspace/proxy-bin/socks/in-ca.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-fr",
+      "listen": "/workspace/proxy-bin/socks/in-fr.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-gb",
+      "listen": "/workspace/proxy-bin/socks/in-gb.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-se",
+      "listen": "/workspace/proxy-bin/socks/in-se.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-ch",
+      "listen": "/workspace/proxy-bin/socks/in-ch.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-ovpn-jp",
+      "listen": "/workspace/proxy-bin/socks/in-ovpn-jp.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-ovpn-kr",
+      "listen": "/workspace/proxy-bin/socks/in-ovpn-kr.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    },
+    {
+      "tag": "in-ovpn-ro",
+      "listen": "/workspace/proxy-bin/socks/in-ovpn-ro.sock",
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+          "path": "/vless"
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "protocol": "freedom"
+    },
+    {
+      "tag": "socks-jp",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9051
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-us",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9052
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-de",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9053
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-nl",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9054
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-kr",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9055
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-sg",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9056
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-au",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9057
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-ca",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9058
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-fr",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9059
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-gb",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9060
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-se",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9061
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-ch",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9062
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-ovpn-jp",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9171
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-ovpn-kr",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9172
+          }
+        ]
+      }
+    },
+    {
+      "tag": "socks-ovpn-ro",
+      "protocol": "socks",
+      "settings": {
+        "servers": [
+          {
+            "address": "127.0.0.1",
+            "port": 9173
+          }
+        ]
+      }
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-jp"
+        ],
+        "outboundTag": "socks-jp"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-us"
+        ],
+        "outboundTag": "socks-us"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-de"
+        ],
+        "outboundTag": "socks-de"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-nl"
+        ],
+        "outboundTag": "socks-nl"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-kr"
+        ],
+        "outboundTag": "socks-kr"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-sg"
+        ],
+        "outboundTag": "socks-sg"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-au"
+        ],
+        "outboundTag": "socks-au"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-ca"
+        ],
+        "outboundTag": "socks-ca"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-fr"
+        ],
+        "outboundTag": "socks-fr"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-gb"
+        ],
+        "outboundTag": "socks-gb"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-se"
+        ],
+        "outboundTag": "socks-se"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-ch"
+        ],
+        "outboundTag": "socks-ch"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-ovpn-jp"
+        ],
+        "outboundTag": "socks-ovpn-jp"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-ovpn-kr"
+        ],
+        "outboundTag": "socks-ovpn-kr"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "in-ovpn-ro"
+        ],
+        "outboundTag": "socks-ovpn-ro"
+      }
+    ]
+  }
+}
