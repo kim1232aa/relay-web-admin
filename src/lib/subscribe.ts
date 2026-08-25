@@ -1,6 +1,5 @@
 import { STACK_UUID } from "./seed";
-import { buildClashYaml, buildSingbox, buildV2rayLinks } from "./nodes";
-import { liveExitSlots } from "./tunnel.server";
+import { buildClashYaml, buildSingbox, buildV2rayLinks, type LiveExit } from "./nodes";
 
 export const SUB_TOKEN = "7e4c91ab2d08f3c6";
 export const SUB_PATH = `/sub-${SUB_TOKEN}`;
@@ -15,16 +14,16 @@ export function publicHostname(hostWithPort: string): string {
   return hostWithPort.replace(/:\d+$/, "");
 }
 
-export function clashBody(host: string): string {
-  return buildClashYaml(publicHostname(host), STACK_UUID, SUB_PATH, liveExitSlots());
+export function clashBody(host: string, exits: LiveExit[] = []): string {
+  return buildClashYaml(publicHostname(host), STACK_UUID, SUB_PATH, exits);
 }
 
-export function v2rayBody(host: string): string {
-  return buildV2rayLinks(publicHostname(host), STACK_UUID, liveExitSlots());
+export function v2rayBody(host: string, exits: LiveExit[] = []): string {
+  return buildV2rayLinks(publicHostname(host), STACK_UUID, exits);
 }
 
-export function singboxBody(host: string): string {
-  return buildSingbox(publicHostname(host), STACK_UUID, liveExitSlots());
+export function singboxBody(host: string, exits: LiveExit[] = []): string {
+  return buildSingbox(publicHostname(host), STACK_UUID, exits);
 }
 
 export function clashHeaders(): HeadersInit {
