@@ -1,8 +1,7 @@
 #!/bin/bash
-set -e
 BIN="$(cd "$(dirname "$0")" && pwd)"
 cd "$BIN"
-bash "$BIN/install.sh"
+bash "$BIN/install.sh" || true
 mkdir -p "$BIN/socks" "$BIN/tor" "$BIN/ovpn"
 
 python3 - "$BIN" <<'PY'
@@ -10,6 +9,8 @@ import json, sys
 from pathlib import Path
 bin = Path(sys.argv[1])
 p = bin / "xray.json"
+if not p.exists():
+    raise SystemExit(0)
 cfg = json.loads(p.read_text())
 for ib in cfg.get("inbounds", []):
     listen = ib.get("listen")
@@ -39,14 +40,19 @@ for pid in os.listdir("/proc"):
         cmd = open("/proc/%s/cmdline" % pid, "rb").read().replace(b"\0", b" ").decode().strip()
     except OSError:
         continue
-    if cmd == needle:
+    if cmd == needle or cmd.endswith("mux.mjs"):
         try:
             os.kill(int(pid), 15)
         except OSError:
             pass
 ' "$BIN"
-rm -f "$BIN/socks/"in-*.sock "$BIN/socks/"*.sock.lock
+rm -f "$BIN/socks/"in-*.sock "$BIN/socks/"*.sock.lock 2>/dev/null || true
 sleep 0.3
+
+if [ ! -x "$BIN/xray" ]; then
+  echo "xray missing after install" >&2
+  exit 1
+fi
 
 "$BIN/xray" run -c "$BIN/xray.json" >>"$BIN/xray.log" 2>&1 &
 echo $! >"$BIN/xray.pid"
@@ -74,6 +80,12 @@ if [ -f "$BIN/ovpn-slots.pid" ] && kill -0 "$(cat "$BIN/ovpn-slots.pid")" 2>/dev
 else
   PROXY_BIN="$BIN" PYTHONPATH="$BIN" python3 "$BIN/kui/ovpn_slots.py" >>"$BIN/ovpn-slots.log" 2>&1 &
   echo $! >"$BIN/ovpn-slots.pid"
+fi
+
+# Keep named hostname if token present; else scrape trycloudflare
+if [ -s "$BIN/cf-tunnel-token" ] && [ -s "$BIN/cf-hostname" ]; then
+  echo "tunnel $(cat "$BIN/cf-hostname") (named)"
+  exit 0
 fi
 
 for i in $(seq 1 30); do
