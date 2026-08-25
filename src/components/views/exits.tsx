@@ -194,7 +194,7 @@ export function ExitsView() {
       <ul className="divide-y divide-border overflow-hidden rounded-lg border border-border bg-surface">
         {[
           ["🚀 节点选择", "select · 总入口"],
-          ["⚡ CF入口", "url-test · Cloudflare 优选（出口仍是本机）"],
+          ["⚡ CF入口", "url-test · Cloudflare 域名优选（出口仍是本机）"],
           ["🌍 真实出口", "select · Tor + OpenVPN 已通电路"],
           ["🧅 Tor", "select · Tor 国家出口"],
           ["🔑 OpenVPN", "select · OpenVPN/VPNGate 出口"],

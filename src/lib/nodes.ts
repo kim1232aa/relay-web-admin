@@ -17,16 +17,18 @@ export type LiveExit = {
 };
 
 export const CF_FRONTS: { server: string; name: string }[] = [
-  { server: "104.16.1.1", name: "CF入口·104.16" },
-  { server: "104.17.1.1", name: "CF入口·104.17" },
-  { server: "104.18.1.1", name: "CF入口·104.18" },
-  { server: "104.19.1.1", name: "CF入口·104.19" },
-  { server: "104.21.1.1", name: "CF入口·104.21" },
-  { server: "104.26.1.1", name: "CF入口·104.26" },
-  { server: "172.67.1.1", name: "CF入口·172.67" },
-  { server: "188.114.96.1", name: "CF入口·NRT" },
-  { server: "188.114.97.1", name: "CF入口·SIN" },
-  { server: "188.114.98.1", name: "CF入口·HKG" },
+  { server: "cf.090227.xyz", name: "CF优选·090227" },
+  { server: "bestcf.030101.xyz", name: "CF优选·移动" },
+  { server: "saas.sin.fan", name: "CF优选·MIYU" },
+  { server: "www.visa.cn", name: "伪装·VISA" },
+  { server: "www.visa.com", name: "伪装·VISA·COM" },
+  { server: "www.visa.com.hk", name: "伪装·VISA·HK" },
+  { server: "time.is", name: "伪装·TimeIs" },
+  { server: "cloudflare.com", name: "CF·cloudflare.com" },
+  { server: "www.cloudflare.com", name: "CF·www" },
+  { server: "cdnjs.cloudflare.com", name: "CF·cdnjs" },
+  { server: "cloudflare-dns.com", name: "CF·dns" },
+  { server: "dash.cloudflare.com", name: "CF·dash" },
 ];
 
 const CLAUDE = ["claude.ai", "claudeusercontent.com", "anthropic.com", "claude.com"];

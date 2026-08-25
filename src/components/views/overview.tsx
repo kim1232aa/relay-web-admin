@@ -22,7 +22,7 @@ import { LatencySpark } from "@/components/views/latency-spark";
 
 const PIPE = [
   { k: "client", l: "客户端", s: "Clash / v2rayN" },
-  { k: "cf", l: "Cloudflare", s: "命名隧道 · 优选 IP" },
+  { k: "cf", l: "Cloudflare", s: "命名隧道 · 域名优选" },
   { k: "in", l: "本机入站", s: "VLESS + WS /vless" },
   { k: "exit", l: "出站", s: "本机 / Tor 电路" },
 ];

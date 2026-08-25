@@ -8,7 +8,7 @@
 
 ```
 Clash / v2rayN
-  → Cloudflare（优选 IP，SNI = 隧道主机名）
+  → Cloudflare（域名优选，SNI/Host = 隧道主机名）
   → cloudflared
   → mux（/vless 进本机，/res-* 进对应电路）
   → xray VLESS+WS
