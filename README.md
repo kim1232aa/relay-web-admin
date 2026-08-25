@@ -46,4 +46,12 @@ npm run dev
 - cloudflared（GitHub Cloudflare）
 - tor / openvpn / slirp4netns（系统已装则直接用，否则解 Debian deb）
 
+## 保活
+
+gcloud Cloud Shell 靠 `gcloud cloud-shell ssh` 挠痒，闲置约 40 分钟会回收。这台没有 gcloud：
+
+1. **进程**：`supervise.sh` 每 20 秒探 `/vless`，xray / mux / cloudflared / Tor 挂了就拉起。
+2. **挠痒**：管理页 Keepalive 每 60 秒探本地 + 隧道，连续 3 次失败才重启。
+3. **机器**：关掉会话后这台会被收，supervise 救不了；需要定时任务在项目里再跑 `start.sh`。
+
 **不要把 `proxy-bin/cf-tunnel-token` 提交进 git。** 二进制、Tor 缓存也不进仓库。

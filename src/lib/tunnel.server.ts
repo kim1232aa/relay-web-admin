@@ -64,6 +64,51 @@ export function restartStack() {
   }).unref();
 }
 
+async function httpOk(url: string, ms: number): Promise<boolean> {
+  const ac = new AbortController();
+  const timer = setTimeout(() => ac.abort(), ms);
+  try {
+    const res = await fetch(url, { method: "GET", signal: ac.signal, cache: "no-store" });
+    return res.ok || res.status === 426 || res.status === 400;
+  } catch {
+    return false;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+let tickleFails = 0;
+
+export async function tickleStack() {
+  const host = tunnelHostname();
+  const local = await httpOk("http://127.0.0.1:38079/vless", 4000);
+  const tunnel = host ? await httpOk(`https://${host}/vless`, 8000) : false;
+  const bad = !local || Boolean(host && !tunnel);
+  tickleFails = bad ? tickleFails + 1 : 0;
+  const restarted = tickleFails >= 3;
+  if (restarted) tickleFails = 0;
+  const row = {
+    at: new Date().toISOString(),
+    local,
+    tunnel,
+    host,
+    restarted,
+  };
+  try {
+    writeFileSync(join(BIN, "heartbeat.json"), JSON.stringify(row) + "\n");
+  } catch {
+    /* ignore */
+  }
+  try {
+    const line = `${row.at} tickle local=${local} tunnel=${tunnel} host=${host || "-"} restarted=${restarted}\n`;
+    writeFileSync(join(BIN, "supervise.log"), line, { flag: "a" });
+  } catch {
+    /* ignore */
+  }
+  if (restarted) restartStack();
+  return row;
+}
+
 export function liveExitSlots(): LiveExit[] {
   const rows: LiveExit[] = [];
   for (const file of [join(BIN, "slots.json"), join(BIN, "ovpn.json")]) {
@@ -86,7 +131,20 @@ export function stackStatus() {
     cloudflared: pidAlive(join(BIN, "cloudflared.pid")),
     supervise: pidAlive(join(BIN, "supervise.pid")),
     slots: pidAlive(join(BIN, "slots.pid")),
+    ovpn: pidAlive(join(BIN, "ovpn-slots.pid")),
   };
+  let heartbeat: { at?: string; local?: boolean; tunnel?: boolean } | null = null;
+  try {
+    if (existsSync(join(BIN, "heartbeat.json"))) {
+      heartbeat = JSON.parse(readFileSync(join(BIN, "heartbeat.json"), "utf8")) as {
+        at?: string;
+        local?: boolean;
+        tunnel?: boolean;
+      };
+    }
+  } catch {
+    heartbeat = null;
+  }
   const live = procs.xray && procs.mux && procs.cloudflared;
   const slots = liveExitSlots();
   return {
@@ -95,6 +153,7 @@ export function stackStatus() {
     uuid: "a3f1c8e2-9b47-4d6a-8e21-c5f90b3d7a14",
     procs,
     live,
+    heartbeat,
     egress: "this-host",
     slots,
     counts: counts(host || "relay.local", slots),

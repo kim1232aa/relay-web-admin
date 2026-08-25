@@ -53,7 +53,11 @@ export interface AdminState {
   selectExit: (id: string) => void;
   appendLog: (text: string) => void;
   currentExit: () => Exit | undefined;
-  recordProbe: (ms: number, ok: boolean) => void;
+  recordProbe: (
+    ms: number,
+    ok: boolean,
+    tickle?: { local?: boolean; tunnel?: boolean; restarted?: boolean },
+  ) => void;
   requestFailover: () => void;
   updateSettings: (patch: Partial<Settings>) => void;
   changePassword: (current: string, next: string) => { ok: true } | { ok: false; error: string };
@@ -182,7 +186,7 @@ export const useAdminStore = create<AdminState>()(
         set((s) => ({ logs: [...s.logs, line].slice(-400) }));
       },
 
-      recordProbe: (ms, ok) => {
+      recordProbe: (ms, ok, tickle) => {
         const s = get();
         if (s.failoverBusy) return;
         const via = s.exits.find((e) => e.id === s.currentExitId)?.label ?? "直连";
@@ -204,8 +208,11 @@ export const useAdminStore = create<AdminState>()(
           latencies: [...st.latencies, ms].slice(-24),
           probeCount: st.probeCount + 1,
         }));
-        if (s.settings.keepalive && Math.random() < 0.22) {
-          get().appendLog("[keepalive] tickle ok");
+        if (s.settings.keepalive && tickle) {
+          const bit = tickle.restarted
+            ? "restarted stack"
+            : `local=${tickle.local ? "ok" : "down"} tunnel=${tickle.tunnel ? "ok" : "down"}`;
+          get().appendLog(`[keepalive] tickle ${bit}`);
         }
       },
 

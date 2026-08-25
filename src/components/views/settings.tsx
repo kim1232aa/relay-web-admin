@@ -129,7 +129,9 @@ export function SettingsView() {
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="text-sm">Keepalive</p>
-            <p className="text-xs text-muted">本机 supervise 会探隧道并拉起进程</p>
+            <p className="text-xs text-muted">
+              打开后会定时探 /vless；失败则拉起 xray / 隧道（对标 gcloud 挠痒，但管的是本机进程）
+            </p>
           </div>
           <Switch
             checked={settings.keepalive}
