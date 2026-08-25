@@ -1,8 +1,10 @@
 #!/bin/bash
+# Watchdog: reinstall if binaries missing, restart stack / slot managers if down.
 BIN="$(cd "$(dirname "$0")" && pwd)"
 HOST_FILE="$BIN/cf-hostname"
 LOG="$BIN/supervise.log"
-INTERVAL=20
+INTERVAL="${SUPERVISE_INTERVAL:-20}"
+echo $$ >"$BIN/supervise.pid"
 
 alive() {
   local f="$1"
@@ -24,8 +26,16 @@ stamp() {
   echo "$(date -u '+%Y-%m-%dT%H:%M:%SZ') $*" >>"$LOG"
 }
 
-stamp "supervise start"
+ensure_bins() {
+  if [ ! -x "$BIN/xray" ] || [ ! -x "$BIN/cloudflared" ] || [ ! -f "$BIN/mux.mjs" ]; then
+    stamp "missing binaries, run install.sh"
+    bash "$BIN/install.sh" >>"$LOG" 2>&1 || stamp "install.sh failed"
+  fi
+}
+
+stamp "supervise start bin=$BIN interval=${INTERVAL}s"
 while true; do
+  ensure_bins
   if ! alive "$BIN/slots.pid"; then
     stamp "slots down, start"
     PYTHONPATH="$BIN" PROXY_BIN="$BIN" python3 "$BIN/kui/slots.py" >>"$BIN/slots.log" 2>&1 &
