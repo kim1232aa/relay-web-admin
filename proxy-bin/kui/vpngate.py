@@ -25,7 +25,6 @@ IPPURE_URL = "https://ippure.cc/api/api.php"
 STREAM_URLS = (
     "https://www.google.com/",
     "https://chatgpt.com",
-    "https://cn.tradingview.com",
     "https://claude.ai",
 )
 
@@ -617,7 +616,7 @@ def probe_targets(
             }
         )
     base_ok = bool(attempts and attempts[0]["accepted"])
-    custom_ok = bool(attempts[1:]) and all(attempt["accepted"] for attempt in attempts[1:])
+    custom_ok = bool(attempts[1:]) and any(attempt["accepted"] for attempt in attempts[1:])
     return {
         "base_ok": base_ok,
         "custom_ok": custom_ok,
